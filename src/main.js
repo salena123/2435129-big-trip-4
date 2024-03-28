@@ -3,13 +3,18 @@ import EditFormView from './view/form-editing-veiw.js';
 import BordPresenter from './presenter/presenter.js';
 import TripName from './view/trip-name-view.js';
 import { render, RenderPosition } from './render.js';
+import PointModel from './model/point-model.js';
 
 const tripControlsFilters = document.querySelector('.trip-controls__filters');
 const tripEvents = document.querySelector('.trip-events');
 const tripMain = document.querySelector('.trip-main');
 
+const pointsModel = new PointModel();
+
+
 const bordPresenter = new BordPresenter({
-  container:tripEvents
+  container:tripEvents,
+  pointsModel,
 });
 
 render(new FiltersView(), tripControlsFilters);

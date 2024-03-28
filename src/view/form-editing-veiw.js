@@ -2,8 +2,13 @@ import { createElement } from '../render';
 import { createEditFormElementTemplate } from '../template/form-editing-template';
 
 export default class EditFormView {
+  constructor(point) {
+    this.point = point;
+
+  }
+
   getTemplate() {
-    return createEditFormElementTemplate();
+    return createEditFormElementTemplate(this.point);
   }
 
   getElement() {
