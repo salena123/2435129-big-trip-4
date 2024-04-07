@@ -2,6 +2,7 @@ import {formatDateToMMMDD, formatDateToHHmm, getTimeDuration } from '../utils';
 
 function makeOffers(offers) {
   const aaa = [];
+
   for (let i = 0; i < offers.length; i++){
     const checkedOffer = `
     <li class="event__offer">

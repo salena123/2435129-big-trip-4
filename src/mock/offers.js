@@ -3,9 +3,10 @@ import { getRandomArrayElement, getRandomNumber, createIdGenerator } from '../ut
 
 function genOffer() {
   return {
-    id: createIdGenerator(),
+    id: createIdGenerator()(),
     name: getRandomArrayElement(OFFERS),
     offPrice: getRandomNumber(10, 500),
+    checked: getRandomNumber(0, 1),
   };
 }
 
