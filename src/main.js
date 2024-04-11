@@ -1,5 +1,5 @@
 import FiltersView from './view/filters-view.js';
-import BordPresenter from './presenter/presenter.js';
+import BordPresenter from './presenter/board-presenter.js';
 import TripName from './view/trip-name-view.js';
 import { render, RenderPosition } from './render.js';
 import PointModel from './model/point-model.js';
