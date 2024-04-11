@@ -1,7 +1,7 @@
 import FiltersView from './view/filters-view.js';
 import BordPresenter from './presenter/board-presenter.js';
 import TripName from './view/trip-name-view.js';
-import { render, RenderPosition } from './render.js';
+import { render, RenderPosition } from './framework/render.js';
 import PointModel from './model/point-model.js';
 import OfferModel from './model/offer-model.js';
 
@@ -13,7 +13,7 @@ const pointsModel = new PointModel();
 const offerModel = new OfferModel();
 
 const bordPresenter = new BordPresenter({
-  container:tripEvents,
+  boardContainer:tripEvents,
   pointsModel,
   offerModel,
 });

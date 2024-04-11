@@ -2,29 +2,37 @@ import FormOfCreationView from '../view/form-of-creation-view.js';
 import EditFormView from '../view/form-editing-veiw.js';
 import PointView from '../view/point-view.js';
 import SortingView from '../view/sorting-view.js';
-import { render, RenderPosition } from '../render.js';
+import { render, RenderPosition } from '../framework/render.js';
+
 
 export default class BordPresenter {
-  sortingComponent = new SortingView();
-  formOfCreationComponent = new FormOfCreationView();
+  #boardContainer = null;
+  #pointsModel = null;
+  #offerModel = null;
 
-  constructor ({container, pointsModel, offerModel}){
-    this.container = container;
-    this.pointsModel = pointsModel;
-    this.offerModel = offerModel;
+  #sortingComponent = new SortingView();
+  #formOfCreationComponent = new FormOfCreationView();
+
+  #points = [];
+  #offers = [];
+
+  constructor ({boardContainer, pointsModel, offerModel}){
+    this.#boardContainer = boardContainer;
+    this.#pointsModel = pointsModel;
+    this.#offerModel = offerModel;
   }
 
   init() {
-    this.points = [...this.pointsModel.getPoints()];
-    this.offers = [...this.offerModel.getOffers()];
+    this.#points = [...this.#pointsModel.points];
+    this.#offers = [...this.#offerModel.getOffers()];
 
-    render(this.sortingComponent, this.container, RenderPosition.AFTERBEGIN);
-    render(this.formOfCreationComponent, this.container);
-    render(new EditFormView(), this.formOfCreationComponent.getElement());
+    render(this.#sortingComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
+    render(this.#formOfCreationComponent, this.#boardContainer);
 
-    for(let i = 1; i < this.points.length; i++) {
-      render(new PointView({point: this.points[i]}), this.formOfCreationComponent.getElement());
 
+    for(let i = 1; i < this.#points.length; i++) {
+      render(new PointView({point: this.#points[i]}), this.#formOfCreationComponent.element);
+      render(new EditFormView({point: this.#points[i]}), this.#formOfCreationComponent.element);
     }
   }
 }

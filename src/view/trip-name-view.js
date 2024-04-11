@@ -1,20 +1,8 @@
 import { createTripNameTemplate } from '../template/trip-name-template.js';
-import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view.js';
 
-export default class TripName {
-  getTemplate() {
+export default class TripName extends AbstractView{
+  get template() {
     return createTripNameTemplate();
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
   }
 }

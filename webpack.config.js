@@ -1,6 +1,7 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
+const { default: test } = require('node:test');
 
 module.exports = {
   entry: './src/main.js',
@@ -37,6 +38,10 @@ module.exports = {
           },
         },
       },
-    ]
-  }
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      }
+    ],
+  },
 };
