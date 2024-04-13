@@ -1,8 +1,8 @@
-import { getRandomArrayElement, getRandomNumber } from '../utils';
+import { getRandomArrayElement, getRandomNumber } from '../utils/common.js';
 import { TYPE_OF_POINT, CITIES} from '../const';
 import dayjs from 'dayjs';
-import { genOffer } from './offers';
-import { genDestanation } from './destination';
+import { genOffer } from './offers-mock';
+import { genDestanation } from './destination-mock';
 
 const mockPoint = [
   {

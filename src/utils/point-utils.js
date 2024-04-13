@@ -10,26 +10,6 @@ const MSEC_IN_24_HOURS = 86400000;
 const MIN_IN_HOUR = 60;
 const HOURS_IN_DAY = 24;
 
-
-const getRandomNumber = function(min, max) {
-  const lower = Math.ceil(Math.min(max, min));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const createIdGenerator = function() {
-  let id = 0;
-  return function () {
-    id += 1;
-    return id;
-  };
-};
-
-function getRandomArrayElement (items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
 function pointDate(date) {
   return date ? dayjs(date).format(DATE_FORMAT) : '';
 }
@@ -64,4 +44,4 @@ function makeKebabCase(string) {
 function isChecked(int) {
   return (int === 1) ? 'checked' : '';
 }
-export {getRandomArrayElement, pointDate, formatDateToMMMDD, formatDateToHHmm, getTimeDuration, createIdGenerator, getRandomNumber, makeKebabCase, isChecked};
+export {pointDate, formatDateToMMMDD, formatDateToHHmm, getTimeDuration, makeKebabCase, isChecked};
