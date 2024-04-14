@@ -1,8 +1,9 @@
-import {makeKebabCase, isChecked, getRandomNumber, getRandomArrayElement } from '../utils';
+import { getRandomNumber, getRandomArrayElement } from '../utils/common.js';
+import {makeKebabCase, isChecked } from '../utils/point-utils.js';
 import { TYPE_OF_POINT, CITIES } from '../const';
 import dayjs from 'dayjs';
-import { genOffer } from '../mock/offers';
-import { genDestanation } from '../mock/destination';
+import { genOffer } from '../mock/offers-mock';
+import { genDestanation } from '../mock/destination-mock';
 
 
 const BLANK_POINT = {
@@ -58,8 +59,9 @@ function genEventTypeItem (arr) {
 }
 
 function createEditFormElementTemplate (point) {
-  const { offers, destination, type, price, timeFrom, timeTo } = point;
+  const { offers, destination, type, price, timeFrom, timeTo, city } = point;
   return `
+  <li>
     <form class="event event--edit" action="#" method="post">
       <header class="event__header">
         <div class="event__type-wrapper">
@@ -72,18 +74,16 @@ function createEditFormElementTemplate (point) {
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
-
               ${genEventTypeItem(TYPE_OF_POINT)}
-
             </fieldset>
           </div>
         </div>
 
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-1">
-            ${type}
+          ${type}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination[0].name}" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
           <datalist id="destination-list-1">
             <option value="${destination[0].name}"></option>
           </datalist>
@@ -106,7 +106,10 @@ function createEditFormElementTemplate (point) {
         </div>
 
         <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-        <button class="event__reset-btn" type="reset">Cancel</button>
+        <button class="event__reset-btn" type="reset">Delete</button>
+        <button class="event__rollup-btn" type="button">
+          <span class="visually-hidden">Open event</span>
+        </button>
       </header>
       <section class="event__details">
         <section class="event__section  event__section--offers">
@@ -120,7 +123,6 @@ function createEditFormElementTemplate (point) {
         <section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description">${destination[0].description}</p>
-
           <div class="event__photos-container">
             <div class="event__photos-tape">
               ${getPhotos(destination[0].picture)}
@@ -128,7 +130,8 @@ function createEditFormElementTemplate (point) {
           </div>
         </section>
       </section>
-    </form>`;
+    </form>
+    </li>`;
 }
 
 export { createEditFormElementTemplate, BLANK_POINT } ;

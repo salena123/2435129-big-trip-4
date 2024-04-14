@@ -1,4 +1,4 @@
-import {formatDateToMMMDD, formatDateToHHmm, getTimeDuration } from '../utils';
+import {formatDateToMMMDD, formatDateToHHmm, getTimeDuration } from '../utils/point-utils.js';
 
 function makeOffers(offers) {
   const aaa = [];
