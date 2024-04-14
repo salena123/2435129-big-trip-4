@@ -3,12 +3,13 @@ import EditFormView from '../view/form-editing-veiw.js';
 import PointView from '../view/point-view.js';
 import SortingView from '../view/sorting-view.js';
 import { render, RenderPosition, replace } from '../framework/render.js';
-
+import EmptyList from '../view/empty-list-view.js';
 
 export default class BordPresenter {
   #boardContainer = null;
   #pointsModel = null;
   #offerModel = null;
+  #bodyElement = null;
 
   #sortingComponent = new SortingView();
   #formOfCreationComponent = new FormOfCreationView();
@@ -16,17 +17,22 @@ export default class BordPresenter {
   #boardPoints = [];
   #offers = [];
 
-  constructor ({boardContainer, pointsModel, offerModel}){
+  constructor ({boardContainer, pointsModel, offerModel, bodyElement}){
     this.#boardContainer = boardContainer;
     this.#pointsModel = pointsModel;
     this.#offerModel = offerModel;
+    this.#bodyElement = bodyElement;
   }
 
   init() {
     this.#boardPoints = [...this.#pointsModel.points];
-    this.#offers = [...this.#offerModel.getOffers()];
+    this.#offers = [...this.#offerModel.offers];
 
-    this.#renderBoard();
+    if (this.#boardPoints.length === 0) {
+      render(new EmptyList(), this.#bodyElement);
+    } else {
+      this.#renderBoard();
+    }
   }
 
   #renderPoint(point) {
@@ -54,6 +60,10 @@ export default class BordPresenter {
       },
       onFormSubmit: () => {
 
+      },
+      onFormSave: () => {
+        replaceEditToPoint();
+        document.removeEventListener('keydown', escKeyDownHadler);
       }
     });
 
@@ -72,10 +82,8 @@ export default class BordPresenter {
     render(this.#sortingComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
     render(this.#formOfCreationComponent, this.#boardContainer);
 
-
     for(let i = 0; i < this.#boardPoints.length; i++) {
       this.#renderPoint(this.#boardPoints[i]);
-
     }
   }
 }

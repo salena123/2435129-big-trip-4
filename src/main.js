@@ -8,6 +8,7 @@ import OfferModel from './model/offer-model.js';
 const tripControlsFilters = document.querySelector('.trip-controls__filters');
 const tripEvents = document.querySelector('.trip-events');
 const tripMain = document.querySelector('.trip-main');
+const bodyElement = document.querySelector('body');
 
 const pointsModel = new PointModel();
 const offerModel = new OfferModel();
@@ -16,6 +17,7 @@ const bordPresenter = new BordPresenter({
   boardContainer:tripEvents,
   pointsModel,
   offerModel,
+  bodyElement: bodyElement,
 });
 
 render(new FiltersView(), tripControlsFilters);
