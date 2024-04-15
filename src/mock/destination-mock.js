@@ -7,7 +7,7 @@ function genPicture () {
 function genDestanation() {
   const city = getRandomArrayElement(CITIES);
   return {
-    id: createIdGenerator,
+    id: createIdGenerator()(),
     name: city,
     description: getRandomArrayElement(DESCRIPTION),
     picture: Array.from({length: getRandomNumber(1, 5)}, genPicture),

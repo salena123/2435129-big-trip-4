@@ -45,13 +45,21 @@ function getPhotos(pictures) {
   return container.join('\n');
 }
 
-function genEventTypeItem (arr) {
+function isCheckedType (checkedTypeOfPoint, typeOfPoint) {
+
+  if (checkedTypeOfPoint === typeOfPoint){
+    return 'checked';
+  }
+
+}
+
+function genEventTypeItem (arrayType, pointType) {
   const container = [];
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arrayType.length; i++) {
     const type =
     `<div class="event__type-item">
-      <input id="event-type-${makeKebabCase(arr[i])}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${makeKebabCase(arr[i])}">
-      <label class="event__type-label  event__type-label--${makeKebabCase(arr[i])}" for="event-type-${makeKebabCase(arr[i])}-1">${arr[i]}</label>
+      <input id="event-type-${makeKebabCase(arrayType[i])}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${makeKebabCase(arrayType[i])}" ${isCheckedType(pointType, arrayType[i])}>
+      <label class="event__type-label  event__type-label--${makeKebabCase(arrayType[i])}" for="event-type-${makeKebabCase(arrayType[i])}-1">${arrayType[i]}</label>
     </div>`;
     container.push(type);
   }
@@ -74,7 +82,7 @@ function createEditFormElementTemplate (point) {
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
-              ${genEventTypeItem(TYPE_OF_POINT)}
+              ${genEventTypeItem(TYPE_OF_POINT, type)}
             </fieldset>
           </div>
         </div>
