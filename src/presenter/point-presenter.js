@@ -102,7 +102,7 @@ export default class PointPresenter {
   };
 
   #handleSaveClick = () => {
-    this.#replacePointToEdit();
+    this.#replaceEditToPoint();
   };
 
   #handleFavoriteClick = () => {
