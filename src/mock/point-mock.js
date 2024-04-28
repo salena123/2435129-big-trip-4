@@ -3,10 +3,10 @@ import { TYPE_OF_POINT, CITIES} from '../const';
 import dayjs from 'dayjs';
 import { genOffer } from './offers-mock';
 import { genDestanation } from './destination-mock';
+import { nanoid } from 'nanoid';
 
 const mockPoint = [
   {
-    id: 1,
     type: getRandomArrayElement(TYPE_OF_POINT),
     city: getRandomArrayElement(CITIES),
     price: getRandomNumber(0, 1000),
@@ -17,7 +17,6 @@ const mockPoint = [
     destination: Array.from({length: getRandomNumber(1, 3)}, genDestanation),
   },
   {
-    id: 2,
     type: getRandomArrayElement(TYPE_OF_POINT),
     city: getRandomArrayElement(CITIES),
     price: getRandomNumber(0, 1000),
@@ -28,7 +27,6 @@ const mockPoint = [
     destination: Array.from({length: getRandomNumber(1, 3)}, genDestanation),
   },
   {
-    id: 3,
     type: getRandomArrayElement(TYPE_OF_POINT),
     city: getRandomArrayElement(CITIES),
     price: getRandomNumber(0, 1000),
@@ -39,7 +37,6 @@ const mockPoint = [
     destination: Array.from({length: getRandomNumber(1, 3)}, genDestanation),
   },
   {
-    id: 4,
     type: getRandomArrayElement(TYPE_OF_POINT),
     city: getRandomArrayElement(CITIES),
     price: getRandomNumber(0, 1000),
@@ -50,7 +47,6 @@ const mockPoint = [
     destination: Array.from({length: getRandomNumber(1, 3)}, genDestanation),
   },
   {
-    id: 5,
     type: getRandomArrayElement(TYPE_OF_POINT),
     city: getRandomArrayElement(CITIES),
     price: getRandomNumber(0, 1000),
@@ -63,7 +59,10 @@ const mockPoint = [
 ];
 
 function getRandomPoint() {
-  return getRandomArrayElement(mockPoint);
+  return {
+    id: nanoid(),
+    ...getRandomArrayElement(mockPoint)
+  };
 }
 
 export {getRandomPoint};

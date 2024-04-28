@@ -24,8 +24,8 @@ function makeOffers1(offers) {
 
     const checkedOffer =
     `<div class="event__offer-selector">
-      <input class="event__offer-checkbox  visually-hidden" id="event-offer-seats-${offers[i].id}" type="checkbox" name="event-offer-${makeKebabCase(offers[i].name)}" ${isChecked(offers[i].checked)}>
-      <label class="event__offer-label" for="event-offer-${makeKebabCase(offers[i].name)}-${offers[i].id}">
+      <input class="event__offer-checkbox  visually-hidden" id="event-offer-seats-1" type="checkbox" name="event-offer-${makeKebabCase(offers[i].name)}" ${isChecked(offers[i].checked)}>
+      <label class="event__offer-label" for="event-offer-${makeKebabCase(offers[i].name)}-1">
         <span class="event__offer-title">${offers[i].name}</span>
         &plus;&euro;&nbsp;
         <span class="event__offer-price">${offers[i].offPrice}</span>
