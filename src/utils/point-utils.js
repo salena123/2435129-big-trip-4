@@ -44,4 +44,32 @@ function makeKebabCase(string) {
 function isChecked(int) {
   return (int === 1) ? 'checked' : '';
 }
-export {pointDate, formatDateToMMMDD, formatDateToHHmm, getTimeDuration, makeKebabCase, isChecked};
+
+function sortDay(DayA, DayB){
+  return dayjs(DayA.timeTo).diff(dayjs(DayB.timeFrom));
+}
+
+function sortTime(timeA, timeB){
+  const timeDif1 = dayjs(timeA.timeTo).diff(dayjs(timeA.timeFrom));
+  const timeDif2 = dayjs(timeB.timeTo).diff(dayjs(timeB.timeFrom));
+
+  return timeDif2 - timeDif1;
+}
+
+function sortPrice(priceA, priceB) {
+  return priceB.price - priceA.price;
+}
+
+function isPointFuture(point) {
+  return dayjs().isBefore(point.dateFrom);
+}
+
+function isPointPresent(point) {
+  return dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo);
+}
+
+function isPointPast(point) {
+  return dayjs().isAfter(point.dateTo);
+}
+
+export {pointDate, formatDateToMMMDD, formatDateToHHmm, getTimeDuration, makeKebabCase, isChecked, sortDay, sortTime, sortPrice, isPointFuture, isPointPresent, isPointPast};

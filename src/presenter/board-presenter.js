@@ -1,40 +1,35 @@
 import FormOfCreationView from '../view/form-of-creation-view.js';
 import PointPresenter from './point-presenter.js';
 import SortingView from '../view/sorting-view.js';
-import { render, RenderPosition} from '../framework/render.js';
+import { render, replace, RenderPosition, remove} from '../framework/render.js';
 import EmptyList from '../view/empty-list-view.js';
 import { updateItem } from '../utils/common.js';
+import { SortType } from '../const.js';
+import { sortTime, sortPrice, sortDay } from '../utils/point-utils.js';
+// import { sort} from '../utils/sort.js';
 
 export default class BordPresenter {
   #boardContainer = null;
   #pointsModel = null;
   #offerModel = null;
-  #bodyElement = null;
 
-  #sortingComponent = new SortingView();
-  #formOfCreationComponent = new FormOfCreationView();
+  #sortingComponent = null;
+  #eventListComponent = null;
   #noPointComponent = new EmptyList();
   #boardPoints = [];
-  #offers = [];
   #pointPresenters = new Map();
+  #currentSortType = SortType.DAY;
+  #sourceBoardPoints = [];
 
-  constructor ({boardContainer, pointsModel, offerModel, bodyElement}){
+  constructor ({boardContainer, pointsModel}){
     this.#boardContainer = boardContainer;
     this.#pointsModel = pointsModel;
-    this.#offerModel = offerModel;
-    this.#bodyElement = bodyElement;
   }
 
   init() {
-    this.#boardPoints = [...this.#pointsModel.points];
-    this.#offers = [...this.#offerModel.offers];
-
-    if (this.#boardPoints.length === 0) {
-      this.#renderNoPoints();
-    } else {
-      this.#renderBoard();
-    }
-    this.#renderSort();
+    this.#boardPoints = [...this.#pointsModel.points].sort(sortDay);
+    this.#sourceBoardPoints = [...this.#pointsModel.points];
+    this.#renderBoard();
   }
 
   #handleModeChane = () => {
@@ -43,7 +38,7 @@ export default class BordPresenter {
 
   #renderPoint(point) {
     const pointPresenter = new PointPresenter({
-      pointListContainer: this.#formOfCreationComponent.element,
+      pointListContainer: this.#eventListComponent.element,
       onDataChange: this.#handlePointChange,
       onModeChange: this.#handleModeChane
     });
@@ -52,9 +47,11 @@ export default class BordPresenter {
   }
 
 
-  #renderPoints(from, to) {
-    this.#boardPoints.slice(from, to).forEach((point) => this.#renderPoint(point));
-  }
+  #renderPoints = () => {
+    this.#boardPoints.forEach((point) => {
+      this.#renderPoint(point);
+    });
+  };
 
   #renderNoPoints() {
     render(this.#noPointComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
@@ -62,11 +59,51 @@ export default class BordPresenter {
 
   #handlePointChange = (updatedPoint) => {
     this.#boardContainer = updateItem(this.#boardPoints, updatedPoint);
+    this.#sourceBoardPoints = updateItem(this.#sourceBoardPoints, updateItem);
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   };
 
+  #sortPoints(sortType) {
+    switch(sortType) {
+      case SortType.TIME:
+        this.#boardPoints.sort(sortTime);
+        break;
+      case SortType.PRICE:
+        this.#boardPoints.sort(sortPrice);
+        break;
+      case SortType.DAY:
+        this.#boardPoints.sort(sortDay);
+        break;
+    }
+
+    this.#currentSortType = sortType;
+  }
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#sortPoints(sortType);
+    this.#clearPoinList();
+    this.#renderSort();
+    this.#renderPoints();
+  };
+
   #renderSort() {
-    render(this.#sortingComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
+    const prevSortComponent = this.#sortingComponent;
+
+    this.#sortingComponent = new SortingView({
+      type: this.#currentSortType,
+      onSortTypeChange: this.#handleSortTypeChange,
+    });
+
+    if (prevSortComponent) {
+      replace(this.#sortingComponent, prevSortComponent);
+      remove(prevSortComponent);
+    } else {
+      render(this.#sortingComponent, this.#boardContainer, RenderPosition.AFTERBEGIN);
+    }
   }
 
   #clearPoinList() {
@@ -74,12 +111,19 @@ export default class BordPresenter {
     this.#pointPresenters.clear();
   }
 
+  #rendereventListContainer = () => {
+    this.#eventListComponent = new FormOfCreationView();
+    render(this.#eventListComponent, this.#boardContainer);
+  };
+
   #renderBoard() {
 
-    render(this.#formOfCreationComponent, this.#boardContainer);
-
-    for(let i = 0; i < this.#boardPoints.length; i++) {
-      this.#renderPoint(this.#boardPoints[i]);
+    if (this.#boardPoints.length === 0) {
+      this.#renderNoPoints();
+      return;
     }
+    this.#renderSort();
+    this.#rendereventListContainer();
+    this.#renderPoints();
   }
 }
