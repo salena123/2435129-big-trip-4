@@ -9,6 +9,9 @@ const Mode = {
 
 export default class PointPresenter {
   #pointListContainer = null;
+  #offersModel = null;
+  #destinationsModel = null;
+
   #handleDataChange = null;
   #handleModeChange = null;
 
@@ -18,8 +21,10 @@ export default class PointPresenter {
   #mode = Mode.DEFAULT;
   #point = null;
 
-  constructor({pointListContainer, onDataChange, onModeChange}) {
+  constructor({pointListContainer, offersModel, destinationsModel, onDataChange, onModeChange}) {
     this.#pointListContainer = pointListContainer;
+    this.#offersModel = offersModel;
+    this.#destinationsModel = destinationsModel;
     this.#handleDataChange = onDataChange;
     this.#handleModeChange = onModeChange;
   }
@@ -32,6 +37,8 @@ export default class PointPresenter {
 
     this.#pointComponent = new PointView ({
       point: this.#point,
+      pointOffers: this.#offersModel.getByType(point.type),
+      pointDestinations: this.#destinationsModel.getById(point.destinations),
       onEditClick: this.#handleEditClick,
       onFavoriteClick: this.#handleFavoriteClick,
     });
@@ -39,6 +46,8 @@ export default class PointPresenter {
 
     this.#pointEditComponent = new EditFormView({
       point: this.#point,
+      offers: this.#offersModel.getByType(point.type),
+      destination: this.#destinationsModel.getById(point.destinations),
       onFormReset: this.#handleFormClick,
       onFormSubmit: () => {
         //добавить обработчик отправки формы!!!!!!!!!!!!

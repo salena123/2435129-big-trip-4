@@ -11,7 +11,8 @@ import { sortTime, sortPrice, sortDay } from '../utils/point-utils.js';
 export default class BordPresenter {
   #boardContainer = null;
   #pointsModel = null;
-  #offerModel = null;
+  #offersModel = null;
+  #destinationsModel = null;
 
   #sortingComponent = null;
   #eventListComponent = null;
@@ -21,14 +22,16 @@ export default class BordPresenter {
   #currentSortType = SortType.DAY;
   #sourceBoardPoints = [];
 
-  constructor ({boardContainer, pointsModel}){
+  constructor ({boardContainer, pointsModel, offerModel, destinationModel}){
     this.#boardContainer = boardContainer;
     this.#pointsModel = pointsModel;
+    this.#offersModel = offerModel;
+    this.#destinationsModel = destinationModel;
   }
 
   init() {
-    this.#boardPoints = [...this.#pointsModel.points].sort(sortDay);
-    this.#sourceBoardPoints = [...this.#pointsModel.points];
+    this.#boardPoints = [...this.#pointsModel.get()].sort(sortDay);
+    this.#sourceBoardPoints = [...this.#pointsModel.get()];
     this.#renderBoard();
   }
 
@@ -39,6 +42,8 @@ export default class BordPresenter {
   #renderPoint(point) {
     const pointPresenter = new PointPresenter({
       pointListContainer: this.#eventListComponent.element,
+      offersModel: this.#offersModel,
+      destinationsModel: this.#destinationsModel,
       onDataChange: this.#handlePointChange,
       onModeChange: this.#handleModeChane
     });

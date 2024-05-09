@@ -1,10 +1,17 @@
-import { genOffer } from '../mock/offers-mock';
-import { getRandomNumber } from '../utils/common.js';
+export default class OffersModel {
+  #offers = null;
+  #service = null;
 
-export default class OfferModel {
-  #offers = Array.from({length: getRandomNumber(0, 5)}, genOffer);
+  constructor(service) {
+    this.#service = service;
+    this.#offers = this.#service.offers;
+  }
 
-  get offers() {
+  get () {
     return this.#offers;
+  }
+
+  getByType(type) {
+    return this.#offers.find((offer) => offer.type === type);
   }
 }

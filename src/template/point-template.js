@@ -4,20 +4,22 @@ function makeOffers(offers) {
   const aaa = [];
 
   for (let i = 0; i < offers.length; i++){
-    const checkedOffer = `
-    <li class="event__offer">
-      <span class="event__offer-title">${offers[i].name}</span>
-      &plus;&euro;&nbsp;
-      <span class="event__offer-price">${offers[i].offPrice}</span>
-    </li>`;
-    aaa.push(checkedOffer);
+    if (offers[i].isChecked) {
+      const checkedOffer = `
+      <li class="event__offer">
+        <span class="event__offer-title">${offers[i].title}</span>
+        &plus;&euro;&nbsp;
+        <span class="event__offer-price">${offers[i].price}</span>
+      </li>`;
+      aaa.push(checkedOffer);
+    }
   }
   return aaa.join('');
 }
 
 
-function createPointTemplate (point) {
-  const {type, city, price, timeFrom, timeTo, offers, isFavorite} = point;
+function createPointTemplate (point, offers) {
+  const {type, city, price, timeFrom, timeTo, isFavorite} = point;
 
   return `<li class="trip-events__item">
             <div class="event">
@@ -39,7 +41,7 @@ function createPointTemplate (point) {
               </p>
               <h4 class="visually-hidden">Offers:</h4>
               <ul class="event__selected-offers">
-                ${makeOffers(offers)}
+                ${makeOffers(offers.offers)}
               </ul>
               <button class="event__favorite-btn ${isFavorite ? 'event__favorite-btn--active' : ''}" type="button">
                 <span class="visually-hidden">Add to favorite</span>

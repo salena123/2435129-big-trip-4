@@ -1,15 +1,20 @@
 import { createEditFormElementTemplate, BLANK_POINT } from '../template/form-editing-template';
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
-export default class EditFormView extends AbstractView {
+export default class EditFormView extends AbstractStatefulView {
   #point = null;
+  #offers = null;
+  #destinations = null;
+
   #handlerFormSubmit = null;
   #handlerFormReset = null;
   #handlerFormSave = null;
 
-  constructor({point = BLANK_POINT, onFormSubmit, onFormReset, onFormSave}) {
+  constructor({point = BLANK_POINT, offers, destination, onFormSubmit, onFormReset, onFormSave}) {
     super();
     this.#point = point;
+    this.#offers = offers;
+    this.#destinations = destination;
     this.#handlerFormSubmit = onFormSubmit;
     this.#handlerFormReset = onFormReset;
     this.#handlerFormSave = onFormSave;
@@ -20,7 +25,11 @@ export default class EditFormView extends AbstractView {
   }
 
   get template() {
-    return createEditFormElementTemplate(this.#point);
+    return createEditFormElementTemplate(
+      this.#point,
+      this.#offers,
+      this.#destinations,
+    );
   }
 
   #formSubmitHandler = (evt) => {

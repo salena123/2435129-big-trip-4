@@ -1,5 +1,5 @@
 import { getRandomNumber, getRandomArrayElement } from '../utils/common.js';
-import {makeKebabCase, isChecked } from '../utils/point-utils.js';
+import {makeKebabCase } from '../utils/point-utils.js';
 import { TYPE_OF_POINT, CITIES } from '../const';
 import dayjs from 'dayjs';
 import { genOffer } from '../mock/offers-mock';
@@ -24,11 +24,11 @@ function makeOffers1(offers) {
 
     const checkedOffer =
     `<div class="event__offer-selector">
-      <input class="event__offer-checkbox  visually-hidden" id="event-offer-seats-1" type="checkbox" name="event-offer-${makeKebabCase(offers[i].name)}" ${isChecked(offers[i].checked)}>
-      <label class="event__offer-label" for="event-offer-${makeKebabCase(offers[i].name)}-1">
-        <span class="event__offer-title">${offers[i].name}</span>
+      <input class="event__offer-checkbox  visually-hidden" id="event-offer-seats-1" type="checkbox" name="event-offer-${makeKebabCase(offers[i].title)}" ${(offers[i].isChecked) ? 'checked' : ''} >
+      <label class="event__offer-label" for="event-offer-${makeKebabCase(offers[i].title)}-1">
+        <span class="event__offer-title">${offers[i].title}</span>
         &plus;&euro;&nbsp;
-        <span class="event__offer-price">${offers[i].offPrice}</span>
+        <span class="event__offer-price">${offers[i].price}</span>
       </label>
     </div>`;
     container.push(checkedOffer);
@@ -39,7 +39,7 @@ function makeOffers1(offers) {
 function getPhotos(pictures) {
   const container = [];
   for (let i = 0; i < pictures.length; i++) {
-    const picture = `<img class="event__photo" src="${pictures[i]}" alt="Event photo">`;
+    const picture = `<img class="event__photo" src="${pictures[i].src}" alt="Event photo">`;
     container.push(picture);
   }
   return container.join('\n');
@@ -66,8 +66,18 @@ function genEventTypeItem (arrayType, pointType) {
   return container.join('\n');
 }
 
-function createEditFormElementTemplate (point) {
-  const { offers, destination, type, price, timeFrom, timeTo, city } = point;
+function genPointDestinationListElement() {
+  const container = [];
+  for (const city of CITIES) {
+    const aaa =
+    `<option value="${city}">${city}</option>`;
+    container.push(aaa);
+  }
+  return container.join('\n');
+}
+
+function createEditFormElementTemplate (point, offers, destination) {
+  const { type, price, timeFrom, timeTo, city } = point;
   return `
   <li>
     <form class="event event--edit" action="#" method="post">
@@ -93,7 +103,7 @@ function createEditFormElementTemplate (point) {
           </label>
           <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
           <datalist id="destination-list-1">
-            <option value="${destination[0].name}"></option>
+          ${genPointDestinationListElement()}
           </datalist>
         </div>
 
@@ -124,16 +134,16 @@ function createEditFormElementTemplate (point) {
           <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
           <div class="event__available-offers">
-            ${makeOffers1(offers)}
+            ${makeOffers1(offers.offers)}
           </div>
         </section>
 
         <section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">${destination[0].description}</p>
+          <p class="event__destination-description">${destination.description}</p>
           <div class="event__photos-container">
             <div class="event__photos-tape">
-              ${getPhotos(destination[0].picture)}
+              ${getPhotos(destination.pictures)}
             </div>
           </div>
         </section>
