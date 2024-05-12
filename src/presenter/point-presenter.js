@@ -46,9 +46,9 @@ export default class PointPresenter {
 
     this.#pointEditComponent = new EditFormView({
       point: this.#point,
-      offers: this.#offersModel.getByType(point.type),
-      destination: this.#destinationsModel.getById(point.destinations),
-      onFormReset: this.#handleFormClick,
+      offers: this.#offersModel.get(),
+      destinations: this.#destinationsModel.get(),
+      onFormReset: this.#resetClickHandler,
       onFormSubmit: () => {
         //добавить обработчик отправки формы!!!!!!!!!!!!
       },
@@ -79,6 +79,7 @@ export default class PointPresenter {
 
   resetView() {
     if (this.#mode !== Mode.DEFAULT) {
+      this.#pointEditComponent.reset(this.#point);
       this.#replaceEditToPoint();
     }
   }
@@ -99,6 +100,7 @@ export default class PointPresenter {
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
+      this.#pointEditComponent.reset(this.#point);
       this.#replaceEditToPoint();
     }
   };
@@ -116,12 +118,20 @@ export default class PointPresenter {
   };
 
   #handleFavoriteClick = () => {
-    this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
+    this.#handleDataChange({
+      ...this.#point,
+      isFavorite: !this.#point.isFavorite
+    });
   };
 
   #handleFormSubmit = (point) => {
     this.#handleDataChange(point);
     this.#replacePointToEdit();
+  };
+
+  #resetClickHandler = () => {
+    this.#pointEditComponent.reset(this.#point);
+    this.#replaceEditToPoint();
   };
 }
 
