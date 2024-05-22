@@ -1,81 +1,74 @@
-const TYPE_OF_POINT = [
-  'Taxi',
-  'Bus',
-  'Train',
-  'Ship',
-  'Drive',
-  'Flight',
-  'Check-in',
-  'Sightseeing',
-  'Restaurant',
-];
+const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFER: 'offer',
+};
 
-const CITIES = [
-  'Astana',
-  'Ekibastuz',
-  'Karaganda',
-  'Pavlodar',
-  'Petropavlovsk',
-  'Almaty',
-  'Shymkent',
-  'Jezkazgan',
-  'Aktobe',
-  'Taraz',
-  'Oskemen',
-  'Kostanay',
-];
+const SORT_TYPES_DISABLED = [SortType.EVENT, SortType.OFFER];
 
-const DESTINATION = [
-  'Moscow',
-  'Yekaterinburg',
-  'Saint Petersburg',
-  'Novosibirsk',
-  'Kazan',
-  'Perm',
-  'Sochi',
-  'Sevastopol',
-  'Nizhny Novgorod',
-  'Samara',
-  'Yaroslavl',
+const UserAction = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  ADD_POINT: 'ADD_POINT',
+  DELETE_POINT: 'DELETE_POINT',
+};
 
-];
-
-const OFFERS = [
-  'Add Luggage',
-  'Switch To Comfort Class',
-  'Add Meal',
-  'Choose Seats',
-  'Travel By Train',
-  'Rent a car',
-  'Book tickets',
-  'Lunch in city',
-];
-
-const DESCRIPTION = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Cras aliquet varius magna, non porta ligula feugiat eget.',
-  'Fusce tristique felis at fermentum pharetra.',
-  'Aliquam id orci ut lectus varius viverra.',
-  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-  'Sed sed nisi sed augue convallis suscipit in sed felis.',
-  'Aliquam erat volutpat.',
-  'Nunc fermentum tortor ac porta dapibus.',
-  'In rutrum ac purus sit amet tempus.',
-];
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+  INIT: 'INIT',
+};
 
 const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
-  PRESENT: 'present',
   PAST: 'past'
 };
 
-const SortType = {
-  DAY: 'day',
-  TIME: 'time',
-  PRICE: 'price'
+const SortTypeDescription = {
+  [SortType.DAY]: 'Day',
+  [SortType.EVENT]: 'Event',
+  [SortType.TIME]: 'Time',
+  [SortType.PRICE]: 'Price',
+  [SortType.OFFER]: 'Offer',
 };
 
-export {TYPE_OF_POINT, CITIES, DESTINATION, DESCRIPTION, OFFERS, SortType, FilterType};
+const PointType = {
+  TAXI: 'taxi',
+  BUS: 'bus',
+  TRAIN: 'train',
+  SHIP: 'ship',
+  DRIVE: 'drive',
+  FLIGHT: 'flight',
+  CHECK_IN: 'check-in',
+  SIGHTSEEING: 'sightseeing',
+  RESTAURANT: 'restaurant'
+};
+
+const PointTypeDescription = {
+  [PointType.TAXI]: 'Taxi',
+  [PointType.BUS]: 'Bus',
+  [PointType.TRAIN]: 'Train',
+  [PointType.SHIP]: 'Ship',
+  [PointType.DRIVE]: 'Drive',
+  [PointType.FLIGHT]: 'Flight',
+  [PointType.CHECK_IN]: 'Check-in',
+  [PointType.SIGHTSEEING]: 'Sightseeing',
+  [PointType.RESTAURANT]: 'Restaurant'
+};
+
+const ApiServiceResponseMethod = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE'
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 300,
+  UPPER_LIMIT: 1000
+};
+
+export {SortType, UserAction, UpdateType, FilterType, SORT_TYPES_DISABLED, SortTypeDescription, PointType, PointTypeDescription, ApiServiceResponseMethod, TimeLimit};
