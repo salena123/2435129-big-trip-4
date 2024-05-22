@@ -5,7 +5,6 @@ export default class PointsModel extends Observable{
 
   #points = [];
   #pointsApiService = null;
-  #isSuccessfullLoading = false;
 
   constructor(pointsApiService) {
     super();
@@ -16,20 +15,14 @@ export default class PointsModel extends Observable{
     try {
       const points = await this.#pointsApiService.points;
       this.#points = points.map(this.#adaptToClient);
-      this.#isSuccessfullLoading = true;
     } catch(err) {
       this.#points = [];
-      this.#isSuccessfullLoading = false;
     }
     this._notify(UpdateType.INIT);
   };
 
   get points() {
     return this.#points;
-  }
-
-  get isSuccessfullLoading() {
-    return this.#isSuccessfullLoading;
   }
 
   updatePoint = async (updateType, update) => {

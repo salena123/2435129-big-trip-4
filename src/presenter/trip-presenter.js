@@ -74,9 +74,7 @@ export default class TripPresenter {
       this.#renderLoading();
       return;
     }
-    if (this.#offersModel.offers.length === 0 || this.#offersModel.isSuccessfullLoading === false ||
-      this.#destinationsModel.destinations.length === 0 || this.#destinationsModel.isSuccessfullLoading === false ||
-      this.#pointsModel.isSuccessfullLoading === false) {
+    if (this.#offersModel.offers.length === 0 || this.#destinationsModel.destinations.length === 0) {
       this.#renderNoAdditionalInfo();
       return;
     }

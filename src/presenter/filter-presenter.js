@@ -5,20 +5,15 @@ import { FilterType, UpdateType } from '../const.js';
 
 export default class FilterPresenter {
   #filterContainer = null;
-
   #filterModel = null;
   #pointsModel = null;
-  #offersModel = null;
-  #destinationsModel = null;
 
   #filterComponent = null;
 
-  constructor({filterContainer, pointsModel, destinationsModel, offersModel, filterModel}) {
+  constructor({filterContainer, pointsModel, filterModel}) {
     this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
     this.#pointsModel = pointsModel;
-    this.#destinationsModel = destinationsModel;
-    this.#offersModel = offersModel;
 
     this.#pointsModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
@@ -63,11 +58,6 @@ export default class FilterPresenter {
   };
 
   #handleModelEvent = () => {
-    if (this.#offersModel.offers.length === 0 || this.#offersModel.isSuccessfullLoading === false ||
-      this.#destinationsModel.destinations.length === 0 || this.#destinationsModel.isSuccessfullLoading === false ||
-      this.#pointsModel.isSuccessfullLoading === false) {
-      return;
-    }
     this.init();
   };
 
