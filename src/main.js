@@ -1,30 +1,44 @@
-import FiltersView from './view/filters-view.js';
-import BordPresenter from './presenter/board-presenter.js';
-import TripName from './view/trip-name-view.js';
-import { render, RenderPosition } from './framework/render.js';
-import PointModel from './model/point-model.js';
-import OfferModel from './model/offer-model.js';
-import DestinationModel from './model/destination-model.js';
-import MockService from './service/mock-service.js';
+import { render } from './framework/render.js';
+import TripPresenter from './presenter/trip-presenter.js';
+import PointsModel from './model/point-model.js';
+import MenuView from './view/menu.js';
+import FilterPresenter from './presenter/filter-presenter.js';
+import FilterModel from './model/filter-model.js';
+import NewPointButtonView from './view/new-point-button-view.js';
+import { getPoints, getDestinations, getOffersByType } from './mock/point.js';
 
-const tripControlsFilters = document.querySelector('.trip-controls__filters');
-const tripEvents = document.querySelector('.trip-events');
-const tripMain = document.querySelector('.trip-main');
-const bodyElement = document.querySelector('body');
+const siteHeaderElement = document.querySelector('.trip-main');
+const filterContainer = document.querySelector('.trip-controls__filters');
+const tripContainer = document.querySelector('.trip-events');
+const menuContainer = document.querySelector('.trip-controls__navigation');
 
-const mockService = new MockService();
-const pointsModel = new PointModel(mockService);
-const offerModel = new OfferModel(mockService);
-const destinationModel = new DestinationModel(mockService);
-const bordPresenter = new BordPresenter({
-  boardContainer:tripEvents,
-  pointsModel,
-  offerModel,
-  destinationModel,
-  bodyElement: bodyElement,
-});
+const points = getPoints();
+const offersByType = getOffersByType();
+const destinations = getDestinations();
+const pointsModel = new PointsModel();
 
-render(new FiltersView(), tripControlsFilters);
-render(new TripName(), tripMain, RenderPosition.AFTERBEGIN);
+const filterModel = new FilterModel();
+const filterPresenter = new FilterPresenter(filterContainer, filterModel, pointsModel);
 
-bordPresenter.init();
+const tripPresenter = new TripPresenter(tripContainer, pointsModel, filterModel);
+
+pointsModel.init(points, destinations, offersByType);
+filterPresenter.init();
+tripPresenter.init(pointsModel);
+
+const newPointButtonComponent = new NewPointButtonView();
+
+const handleNewPointFormClose = () => {
+  newPointButtonComponent.element.disabled = false;
+};
+
+const handleNewPointButtonClick = () => {
+  tripPresenter.createPoint(handleNewPointFormClose);
+  newPointButtonComponent.element.disabled = true;
+};
+
+render(newPointButtonComponent, siteHeaderElement);
+newPointButtonComponent.setClickHandler(handleNewPointButtonClick);
+
+
+render(new MenuView(), menuContainer);
