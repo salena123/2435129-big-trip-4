@@ -28,6 +28,15 @@ const destinationsModel = new DestinationsModel(
 const offersModel = new OffersModel(
   new OffersApiService(END_POINT, AUTHORIZATION)
 );
+const pointsModel = new PointsModel(
+  new PointsApiService(END_POINT, AUTHORIZATION)
+);
+const destinationsModel = new DestinationsModel(
+  new DestinationsApiService(END_POINT, AUTHORIZATION)
+);
+const offersModel = new OffersModel(
+  new OffersApiService(END_POINT, AUTHORIZATION)
+);
 const filterModel = new FilterModel();
 
 const filterPresenter = new FilterPresenter({
@@ -35,7 +44,21 @@ const filterPresenter = new FilterPresenter({
   pointsModel: pointsModel,
   filterModel: filterModel,
 });
+
+const filterPresenter = new FilterPresenter({
+  filterContainer: filterContainer,
+  pointsModel: pointsModel,
+  filterModel: filterModel,
+});
 filterPresenter.init();
+
+const tripPresenter = new TripPresenter({
+  tripContainer: tripContainer,
+  pointsModel: pointsModel,
+  filterModel: filterModel,
+  destinationsModel: destinationsModel,
+  offersModel: offersModel,
+});
 
 const tripPresenter = new TripPresenter({
   tripContainer: tripContainer,
@@ -57,6 +80,14 @@ const handleNewPointButtonClick = () => {
   newPointButtonComponent.element.disabled = true;
 };
 
+offersModel.init().finally(() => {
+  destinationsModel.init().finally(() => {
+    pointsModel.init().finally(() => {
+      render(newPointButtonComponent, siteHeaderElement);
+      newPointButtonComponent.setClickHandler(handleNewPointButtonClick);
+    });
+  });
+});
 offersModel.init().finally(() => {
   destinationsModel.init().finally(() => {
     pointsModel.init().finally(() => {
