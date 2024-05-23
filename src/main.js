@@ -14,7 +14,7 @@ import OffersApiService from "./api-service/offers-api-service.js";
 const AUTHORIZATION = "Basic oVenIls2023pwvt4";
 const END_POINT = "https://21.objects.htmlacademy.pro/big-trip";
 
-const siteHeaderElement = document.querySelector(".trip-main");
+const siteHeaderContainer = document.querySelector(".trip-main");
 const filterContainer = document.querySelector(".trip-controls__filters");
 const tripContainer = document.querySelector(".trip-events");
 const menuContainer = document.querySelector(".trip-controls__navigation");
@@ -34,6 +34,8 @@ const filterModel = new FilterModel();
 const filterPresenter = new FilterPresenter({
   filterContainer: filterContainer,
   pointsModel: pointsModel,
+  destinationsModel: destinationsModel,
+  offersModel: offersModel,
   filterModel: filterModel,
 });
 filterPresenter.init();
@@ -49,9 +51,10 @@ const tripPresenter = new TripPresenter({
 tripPresenter.init();
 
 const newPointButtonPresenter = new NewPointButtonPresenter({
-  newPointButtonContainer: siteHeaderElement,
+  newPointButtonContainer: siteHeaderContainer,
   destinationsModel: destinationsModel,
   offersModel: offersModel,
+  pointsModel: pointsModel,
   tripPresenter: tripPresenter,
 });
 newPointButtonPresenter.init();
