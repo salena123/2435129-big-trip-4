@@ -1,24 +1,24 @@
-import { render } from "./framework/render.js";
-import TripPresenter from "./presenter/trip-presenter.js";
-import NewPointButtonPresenter from "./presenter/new-point-button-presenter.js";
-import PointsModel from "./model/point-model.js";
-import MenuView from "./view/menu.js";
-import FilterPresenter from "./presenter/filter-presenter.js";
-import FilterModel from "./model/filter-model.js";
-import OffersModel from "./model/offers-model.js";
-import DestinationsModel from "./model/destinations-model.js";
-import PointsApiService from "./api-service/points-api-service.js";
-import DestinationsApiService from "./api-service/destinations-api-service.js";
-import OffersApiService from "./api-service/offers-api-service.js";
+import { render } from './framework/render.js';
+import TripPresenter from './presenter/trip-presenter.js';
+import NewPointButtonPresenter from './presenter/new-point-button-presenter.js';
+import PointsModel from './model/point-model.js';
+import MenuView from './view/menu.js';
+import FilterPresenter from './presenter/filter-presenter.js';
+import FilterModel from './model/filter-model.js';
+import OffersModel from './model/offers-model.js';
+import DestinationsModel from './model/destinations-model.js';
+import PointsApiService from './api-service/points-api-service.js';
+import DestinationsApiService from './api-service/destinations-api-service.js';
+import OffersApiService from './api-service/offers-api-service.js';
 
-const AUTHORIZATION = "Basic oVenIls2023pwvt4";
-const END_POINT = "https://21.objects.htmlacademy.pro/big-trip";
+const AUTHORIZATION = 'Basic onIls2023pwvt4';
+const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
 
-const siteHeaderContainer = document.querySelector(".trip-main");
-const filterContainer = document.querySelector(".trip-controls__filters");
-const tripContainer = document.querySelector(".trip-events");
-const menuContainer = document.querySelector(".trip-controls__navigation");
-const tripInfoContainer = document.querySelector(".trip-main__trip-info");
+const siteHeaderContainer = document.querySelector('.trip-main');
+const filterContainer = document.querySelector('.trip-controls__filters');
+const tripContainer = document.querySelector('.trip-events');
+const menuContainer = document.querySelector('.trip-controls__navigation');
+const tripInfoContainer = document.querySelector('.trip-main__trip-info');
 
 const pointsModel = new PointsModel(
   new PointsApiService(END_POINT, AUTHORIZATION)
