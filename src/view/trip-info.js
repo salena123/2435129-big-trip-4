@@ -7,7 +7,7 @@ const renderRouteTrip = (points, destinations) => {
   }
   const routeWithoutRepeats = [points[0].destination];
   for (let i = 1; i < points.length; i++) {
-    if (points[i].destination !== points[i-1].destination) {
+    if (points[i].destination !== points[i - 1].destination) {
       routeWithoutRepeats.push(points[i].destination);
     }
   }
@@ -53,19 +53,15 @@ const renderTotalPriceTrip = (points, offers) => {
   return `Total: &euro;&nbsp;<span class="trip-info__cost-value">${totalPrice}</span>`;
 };
 
-const createTripInfoTemplate = (points, destinations, offers) => {
-  if (destinations.length === 0 || offers.length === 0) {
-    return '';
-  }
-  return  `<div class="trip-info"><div class="trip-info__main">
-    <h1 class="trip-info__title">${renderRouteTrip(points, destinations)}</h1>
-    <p class="trip-info__dates">${renderDatesTrip(points)}</p>
-    </div>
-    <p class="trip-info__cost">
-    ${renderTotalPriceTrip(points, offers)}
-    </p>
-    </div>`;
-};
+const createTripInfoTemplate = (points, destinations, offers) => destinations.length === 0 || offers.length === 0 ? '' :
+  `<div class="trip-info"><div class="trip-info__main">
+  <h1 class="trip-info__title">${renderRouteTrip(points, destinations)}</h1>
+  <p class="trip-info__dates">${renderDatesTrip(points)}</p>
+  </div>
+  <p class="trip-info__cost">
+  ${renderTotalPriceTrip(points, offers)}
+  </p>
+  </div>`;
 
 export default class TripInfoView extends AbstractView {
   #points = null;

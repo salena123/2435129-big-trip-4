@@ -38,7 +38,7 @@ export default class PointPresenter {
     this.#offers = [...this.#offersModel.offers];
 
     const prevPointComponent = this.#pointComponent;
-    const prevEditingFormComponent =  this.#editFormComponent;
+    const prevEditingFormComponent = this.#editFormComponent;
 
     this.#pointComponent = new WayPointView(point, this.#destinations, this.#offers);
     this.#editFormComponent = new EditingFormView({
