@@ -47,7 +47,6 @@ export default class PointPresenter {
       offers: this.#offers,
       isNewPoint: false,
     });
-
     this.#pointComponent.setEditClickHandler(this.#handleEditClick);
     this.#pointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
     this.#editFormComponent.setPointClickHandler(this.#handlePointClick);
@@ -72,18 +71,6 @@ export default class PointPresenter {
     remove(prevPointComponent);
     remove(prevEditingFormComponent);
   }
-
-  destroy = () => {
-    remove(this.#pointComponent);
-    remove(this.#editFormComponent);
-  };
-
-  resetView = () => {
-    if (this.#mode !== Mode.PREVIEW) {
-      this.#editFormComponent.reset(this.#point);
-      this.#replaceEditingFormToPoint();
-    }
-  };
 
   #replacePointToEditingForm = () => {
     replace(this.#editFormComponent, this.#pointComponent);
@@ -137,12 +124,32 @@ export default class PointPresenter {
     );
   };
 
+  #resetFormState = () => {
+    this.#editFormComponent.updateElement({
+      isDisabled: false,
+      isSaving: false,
+      isDeleting: false,
+    });
+  };
+
   setSaving = () => {
     if (this.#mode === Mode.EDITING) {
       this.#editFormComponent.updateElement({
         isDisabled: true,
         isSaving: true,
       });
+    }
+  };
+
+  destroy = () => {
+    remove(this.#pointComponent);
+    remove(this.#editFormComponent);
+  };
+
+  resetView = () => {
+    if (this.#mode !== Mode.PREVIEW) {
+      this.#editFormComponent.reset(this.#point);
+      this.#replaceEditingFormToPoint();
     }
   };
 
@@ -164,11 +171,4 @@ export default class PointPresenter {
     this.#editFormComponent.shake(this.#resetFormState);
   };
 
-  #resetFormState = () => {
-    this.#editFormComponent.updateElement({
-      isDisabled: false,
-      isSaving: false,
-      isDeleting: false,
-    });
-  };
 }

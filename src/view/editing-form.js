@@ -79,7 +79,6 @@ const createEditingFormTemplate = (point, destinations, allOffers, isNewPoint) =
   const {basePrice, type, destination, dateFrom, dateTo, offers, isDisabled, isSaving, isDeleting} = point;
   const allPointTypeOffers = allOffers.find((offer) => offer.type === type);
   const destinationData = destinations.find((item) => item.id === destination);
-  console.log(destinations);
   return (
     `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
@@ -260,7 +259,7 @@ export default class EditingFormView extends AbstractStatefulView{
   #setInnerHandlers = () => {
     this.element.querySelector('.event__type-list').addEventListener('change', this.#pointTypeChangeHandler);
     this.element.querySelector('.event__input').addEventListener('change', this.#pointDestinationChangeHandler);
-    if (this.#offersByType && this.#offersByType.offers.length > 0){
+    if (this.#offersByType & this.#offersByType.offers.length > 0){
       this.element.querySelector('.event__available-offers').addEventListener('change', this.#pointOffersChangeHandler);
     }
     this.element.querySelector('.event__input--price').addEventListener('change', this.#pointPriceChangeHandler);

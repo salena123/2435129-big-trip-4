@@ -11,7 +11,7 @@ import PointsApiService from './api-service/points-api-service.js';
 import DestinationsApiService from './api-service/destinations-api-service.js';
 import OffersApiService from './api-service/offers-api-service.js';
 
-const AUTHORIZATION = 'Basic onIlsaa2024pwvt4';
+const AUTHORIZATION = 'Basic eo0w590ik234343434434a';
 const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
 
 const siteHeaderContainer = document.querySelector('.trip-main');

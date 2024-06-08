@@ -89,15 +89,6 @@ export default class TripPresenter {
     this.#renderSort();
   };
 
-  createPoint = (callback) => {
-    this.#currentSortType = SortType.DAY;
-    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    if (this.#noPointComponent) {
-      render(this.#pointListComponent, this.#tripContainer);
-    }
-    this.#pointNewPresenter.init(callback);
-  };
-
   #handleModeChange = () => {
     this.#pointNewPresenter.destroy();
     this.#pointPresenters.forEach((presenter) => presenter.resetView());
@@ -232,5 +223,14 @@ export default class TripPresenter {
 
   #clearTripInfo = () => {
     this.#tripInfoPresenter.destroy();
+  };
+
+  createPoint = (callback) => {
+    this.#currentSortType = SortType.DAY;
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+    if (this.#noPointComponent) {
+      render(this.#pointListComponent, this.#tripContainer);
+    }
+    this.#pointNewPresenter.init(callback);
   };
 }

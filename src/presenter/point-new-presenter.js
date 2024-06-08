@@ -44,19 +44,6 @@ export default class PointNewPresenter {
     document.addEventListener('keydown', this.#onEscKeyDown);
   };
 
-  destroy = () => {
-    if (!this.#createPointComponent) {
-      return;
-    }
-
-    this.#destroyCallback?.();
-
-    remove(this.#createPointComponent);
-    this.#createPointComponent = null;
-
-    document.removeEventListener('keydown', this.#onEscKeyDown);
-  };
-
   #onEscKeyDown = (evt) => {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
@@ -76,6 +63,27 @@ export default class PointNewPresenter {
     );
   };
 
+  #resetFormState = () => {
+    this.#createPointComponent.updateElement({
+      isDisabled: false,
+      isSaving: false,
+      isDeleting: false,
+    });
+  };
+
+  destroy = () => {
+    if (!this.#createPointComponent) {
+      return;
+    }
+
+    this.#destroyCallback?.();
+
+    remove(this.#createPointComponent);
+    this.#createPointComponent = null;
+
+    document.removeEventListener('keydown', this.#onEscKeyDown);
+  };
+
   setSaving = () => {
     this.#createPointComponent.updateElement({
       isDisabled: true,
@@ -85,13 +93,5 @@ export default class PointNewPresenter {
 
   setAborting = () => {
     this.#createPointComponent.shake(this.#resetFormState);
-  };
-
-  #resetFormState = () => {
-    this.#createPointComponent.updateElement({
-      isDisabled: false,
-      isSaving: false,
-      isDeleting: false,
-    });
   };
 }
