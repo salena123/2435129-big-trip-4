@@ -46,6 +46,7 @@ const renderDestinationContainer = (destination) => !destination ? '' :
   <p class="event__destination-description">${destination.description ? destination.description : ''}</p>
   <div class="event__photos-container">
               <div class="event__photos-tape">
+
               ${renderDestinationPictures(destination.pictures)}
               </div>
             </div>
@@ -78,6 +79,7 @@ const createEditingFormTemplate = (point, destinations, allOffers, isNewPoint) =
   const {basePrice, type, destination, dateFrom, dateTo, offers, isDisabled, isSaving, isDeleting} = point;
   const allPointTypeOffers = allOffers.find((offer) => offer.type === type);
   const destinationData = destinations.find((item) => item.id === destination);
+  console.log(destinations);
   return (
     `<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">

@@ -1,5 +1,5 @@
-import ApiService from '../framework/api-service';
-import { ApiServiceResponseMethod } from '../const';
+import ApiService from '../framework/api-service.js';
+import { ApiServiceResponseMethod } from '../const.js';
 
 export default class PointsApiService extends ApiService {
 

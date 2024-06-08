@@ -6,8 +6,6 @@ const SortType = {
   OFFER: 'offer',
 };
 
-const SORT_TYPES_DISABLED = [SortType.EVENT, SortType.OFFER];
-
 const UserAction = {
   UPDATE_POINT: 'UPDATE_POINT',
   ADD_POINT: 'ADD_POINT',
@@ -70,5 +68,7 @@ const TimeLimit = {
   LOWER_LIMIT: 300,
   UPPER_LIMIT: 1000
 };
+
+const SORT_TYPES_DISABLED = [SortType.EVENT, SortType.OFFER];
 
 export {SortType, UserAction, UpdateType, FilterType, SORT_TYPES_DISABLED, SortTypeDescription, PointType, PointTypeDescription, ApiServiceResponseMethod, TimeLimit};
